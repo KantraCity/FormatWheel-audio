@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <!-- имя по соглашению FormatWheel.*, так приложение находит расширения -->
+    <AssemblyName>FormatWheel.Audio</AssemblyName>
+    <RootNamespace>FormatWheel.Audio</RootNamespace>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- SDK с nuget.org; для локальной разработки можно заменить на ProjectReference -->
+    <PackageReference Include="FormatWheel.Sdk" Version="1.0.*" />
+    <!-- NAudio.Core — обработка, NAudio.Wasapi — Media Foundation (кодеки Windows), Vorbis — чтение OGG -->
+    <PackageReference Include="NAudio.Core" Version="2.2.1" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+    <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+    <!-- Opus на чистом C#: кодек Windows умеет его только читать -->
+    <PackageReference Include="Concentus" Version="2.2.2" />
+    <PackageReference Include="Concentus.Oggfile" Version="1.0.6" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,38 @@
+name: build
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      # FormatWheel.Sdk собираем из репозитория программы — так сборка не зависит от nuget.org
+      - uses: actions/checkout@v4
+        with:
+          repository: KantraCity/FormatWheel-app
+          path: _app
+      - shell: pwsh
+        run: |
+          dotnet pack _app/src/FormatWheel.Sdk/FormatWheel.Sdk.csproj -c Release -o "$env:RUNNER_TEMP/sdk"
+          dotnet nuget add source "$env:RUNNER_TEMP/sdk" -n formatwheel-sdk
+      - run: choco install innosetup -y --no-progress
+      - shell: pwsh
+        run: ./build.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FormatWheel-Audio-Setup
+          path: dist/*.exe
+      - name: Publish release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.exe
+          generate_release_notes: true
