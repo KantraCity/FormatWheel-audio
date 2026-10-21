@@ -30,6 +30,8 @@
 powershell -ExecutionPolicy Bypass -File .\build.ps1
 ```
 
+Нужны [.NET 10 SDK](https://dotnet.microsoft.com/download) и пакет `FormatWheel.Sdk`. На nuget.org его пока нет: возьмите `FormatWheel.Sdk.x.y.z.nupkg` из [релизов FormatWheel-app](https://github.com/KantraCity/FormatWheel-app/releases) (или соберите `dotnet pack src/FormatWheel.Sdk` в репозитории программы) и подключите папку с ним как источник: `dotnet nuget add source C:\путь\к\папке -n formatwheel-sdk`. GitHub Actions делает это сам. Inno Setup скрипт поставит через winget, если его нет.
+
 Зависимости: NAudio.Core, NAudio.Wasapi, NAudio.Vorbis и [Concentus](https://github.com/lostromb/concentus) — Opus на чистом C# (все MIT/BSD), ставятся вместе с расширением. FLAC и ALAC кодируют кодеки Windows 10/11.
 
 Лицензия: MIT.
